@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Youtube Stats{% endblock %}
+
+{% block content %}
+
+
+<!-- Form -->
+<form method="POST" action="/">
+    <div class="form-group">
+      <label for="input channelID">Input Channel ID</label>
+      <input class="form-control" type="text" placeholder="input channel ID here" name="channelID">
+    </div>
+    <p></p>
+    <button type="submit" class="btn btn-primary">Fetch Stats</button>
+  </form>
+
+  <br></br>
+
+  <h5>Result of Youtube Channel Stats:</h5>
+
+  <table class="table table-striped table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Channel Name</th>
+        <th scope="col">Subscribers</th>
+        <th scope="col">Views</th>
+        <th scope="col">Total Videos</th>
+        <th scope="col">Playlist ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>{{output['Channel Name'][0]}}</td>
+        <td>{{output['Subscribers'][0]}}</td>
+        <td>{{output['Views'][0]}}</td>
+        <td>{{output['Total Videos'][0]}}</td>
+        <td>{{output['Playlist ID'][0]}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+{% endblock %}
+
+
+
+
+
