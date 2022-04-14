@@ -4,6 +4,10 @@
 
 {% block content %}
 
+<!--<link rel="{{url_for('static', filename='css/main.css')}}" href="stylesheet"/>-->
+
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='css/main.css') }}">
+
 
 <!-- Form -->
 <form method="POST" action="/">

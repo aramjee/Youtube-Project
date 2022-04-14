@@ -42,6 +42,36 @@ def home(): #inline HTML
         youtube = build(
         api_service_name, api_version, developerKey=api_key) # replace credential with our developer key, also not authenticating any users
 
+        def get_video_ids(youtube, playlist_id):
+    
+            video_ids = []
+            
+            request = youtube.playlistItems().list(
+                part="snippet, contentDetails",
+                playlistId=playlist_id,
+                maxResults = 50 # default call is 5 but we can get maximum of 50, even though we know this person has 911 videos so implement next page token
+            )
+            response = request.execute()
+
+            for item in response['items']:
+                video_ids.append(item['contentDetails']['videoId'])
+            
+            next_page_token = response.get('nextPageToken')
+            while next_page_token is not None:# keep running the request until we reach the last page
+                request = youtube.playlistItems().list(
+                    part = "contentDetails",
+                    playlistId=playlist_id,
+                    maxResults = 50,
+                    pageToken =next_page_token)
+                response = request.execute()
+                
+                for item in response['items']:
+                    video_ids.append(item['contentDetails']['videoId'])
+                
+                next_page_token = response.get('nextPageToken')
+            
+            return video_ids
+
         def get_channel_stats(youtube, channel_ids):
 
             all_data = [] #create empty list to store Channel data
@@ -53,6 +83,7 @@ def home(): #inline HTML
             response = request.execute() # server is getting back a response for client browser
             
             #loop through items content within the response
+           
             try:
 
                 for item in response['items']:
@@ -73,10 +104,25 @@ def home(): #inline HTML
 
 
         channel_stats = get_channel_stats(youtube, channel_ids)
+        
+        if channel_stats is None:
+            #print(channel_stats["Channel Name"][0])
+            data = [{'Channel Name':"",
+                        'Subscribers': "",
+                        'Views':"",
+                        'Total Videos':"",
+                        'Playlist ID':""
+                        }]
+            channel_stats=pd.DataFrame(data)
+            print("Please enter a valid channel ID.")
+
         print(channel_stats)
+       # get_video_ids(youtube)
     return render_template("index.html", content = ["Amit", "Jen", "Kelly"], output = channel_stats)
 
 
+
+'''
 @app.route("/login", methods=["POST", "GET"]) # we need to adds the methods we can use on this login
 def login():
     if request.method == "POST": # check to see if method is POST
@@ -106,8 +152,8 @@ def logout():
         flash("You have been logged out!", "info")
         session.pop("user", None) # removes SESSION data
         return redirect(url_for("login"))
-
-# run the application
+'''
+# Auto-run Application via Saving File
 if __name__ == "__main__":
     app.run(debug=True) # setting to true allow us to not have to re-run server, just automatically detects changes
 
