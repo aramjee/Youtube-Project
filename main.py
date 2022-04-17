@@ -119,40 +119,7 @@ def home(): #inline HTML
         print(channel_stats)
        # get_video_ids(youtube)
     return render_template("index.html", content = ["Amit", "Jen", "Kelly"], output = channel_stats)
-
-
-
-'''
-@app.route("/login", methods=["POST", "GET"]) # we need to adds the methods we can use on this login
-def login():
-    if request.method == "POST": # check to see if method is POST
-        session.permanent = True # defines this specific session as a permanent session, default false
-        user = request.form["nm"] # this give us the data user typed in name box form and assigns info the variable.
-        session["user"] = user # Create a SESSION to store user data as a dictionary. From this session you'll get user info
-        flash("Login Succesful!")
-        return redirect(url_for("user")) # redirects user to 'user' function or page.
-    else:
-        if "user" in session: # if user already logged in 
-            flash("Already logged in!")
-            return redirect(url_for("user"))
-
-        return render_template("login.html")
-
-@app.route("/user")
-def user():
-    if "user" in session: # check session to see if contains data
-        user = session["user"]
-        return f"<h1>{user}</h1>"
-    else: # else there is no user in the session or person has not logged in yet.
-        flash("You are not logged in.")
-        return render_template("user.html", user = user)
-
-@app.route("/logout")
-def logout():
-        flash("You have been logged out!", "info")
-        session.pop("user", None) # removes SESSION data
-        return redirect(url_for("login"))
-'''
+    
 # Auto-run Application via Saving File
 if __name__ == "__main__":
     app.run(debug=True) # setting to true allow us to not have to re-run server, just automatically detects changes
