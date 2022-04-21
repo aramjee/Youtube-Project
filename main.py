@@ -43,7 +43,6 @@ def home(): #inline HTML
         api_service_name, api_version, developerKey=api_key) # replace credential with our developer key, also not authenticating any users
 
         def get_video_ids(youtube, playlist_id):
-    
             video_ids = []
             
             request = youtube.playlistItems().list(
@@ -95,7 +94,8 @@ def home(): #inline HTML
                         }
                     
                     all_data.append(data)
-                    
+                
+                message = flash("Form Submitted Successfully.")
                 return(pd.DataFrame(all_data))
 
             except:
@@ -115,8 +115,9 @@ def home(): #inline HTML
                         }]
             channel_stats=pd.DataFrame(data)
             print("Please enter a valid channel ID.")
-
+        
         print(channel_stats)
+
        # get_video_ids(youtube)
     return render_template("index.html", content = ["Amit", "Jen", "Kelly"], output = channel_stats)
 
