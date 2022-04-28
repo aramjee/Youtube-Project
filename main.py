@@ -35,8 +35,6 @@ def home(): #inline HTML
 
     if request.method == 'POST':
         channel_id = request.form.get("channelID")
-    
-        #api_key = 'AIzaSyDWNS55Gyda-J_lFzXZlJc6WpaX7SDh5mc'
 
         api_key = os.environ.get('youtube_api_key')
         #print(api_key)
