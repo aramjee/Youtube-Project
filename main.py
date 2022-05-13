@@ -6,10 +6,9 @@ from IPython.display import JSON
 import os
 
 app = Flask(__name__) # creates an instance of a flask application
-app.secret_key = "hello"
-app.permanent_session_lifetime = timedelta(days=5) # we are going to store our PERMANENT SESSION for 5 days
+app.secret_key = "hello"  # why do not delete this ?
 
-# define the function-based views...flask only function based?
+
 
 @app.route("/", methods=['GET', 'POST']) # default domain can be /home or /anything
 def home(): #inline HTML
@@ -35,13 +34,8 @@ def home(): #inline HTML
 
     if request.method == 'POST':
         channel_id = request.form.get("channelID")
-
         api_key = os.environ.get('youtube_api_key')
-        #print(api_key)
-
-        channel_ids = [channel_id,
-        # more channels here UC29ju8bIPH5as8OGnQzwJyA
-        ]
+        channel_ids = [channel_id,]
 
         api_service_name = "youtube"
         api_version = "v3"
@@ -111,29 +105,11 @@ def home(): #inline HTML
 
 
         channel_stats = get_channel_stats(youtube, channel_ids)
-        video_ids = get_video_ids(youtube, channel_stats['Playlist ID'][0])
-        print(video_ids)
-
-        if channel_stats is None:
-            #print(channel_stats["Channel Name"][0])
-            channel_stats_data = [{'Channel Name':"",
-                        'Subscribers': "",
-                        'Views':"",
-                        'Total Videos':"",
-                        'Playlist ID':""
-                        }]
-            channel_stats=pd.DataFrame(channel_stats_data)
-            print("Please enter a valid channel ID.")
-        
-        print(channel_stats)
-
-        # Video details in Playlist - ADDED
+         # Video details in Playlist - ADDED
         def get_video_details(youtube, video_ids):
                        
-
             all_video_info = []
 
-            
             for i in range(0, len(video_ids), 50):
                 request = youtube.videos().list(
                     part="snippet,contentDetails,statistics",
@@ -161,53 +137,31 @@ def home(): #inline HTML
             all_video_info = pd.DataFrame(all_video_info)
             all_video_info['viewCount'] = all_video_info['viewCount'].astype(str).astype(int)
             all_video_info.sort_values(by=['viewCount'], inplace = True, ascending = False)
-            all_video_info = all_video_info.head(10)
+            all_video_info = all_video_info.head(10).reset_index(drop=True)
             
 
             return all_video_info
 
-        all_video_info = get_video_details(youtube, video_ids)
-        print(all_video_info)
+        if channel_stats is None:
+            channel_stats_data = [{'Channel Name':"",
+                        'Subscribers': "",
+                        'Views':"",
+                        'Total Videos':"",
+                        'Playlist ID':""
+                        }]
+            channel_stats=pd.DataFrame(channel_stats_data)
+            print("Please enter a valid channel ID.")
+            
+        else:
+            video_ids = get_video_ids(youtube, channel_stats['Playlist ID'][0])
+            print(video_ids)
+            all_video_info = get_video_details(youtube, video_ids)
+            print(all_video_info)
+            
+        print(channel_stats)
+
     return render_template("index.html", output = channel_stats, output2 = all_video_info)
 
-
-
-
-
-
-
-
-'''
-@app.route("/login", methods=["POST", "GET"]) # we need to adds the methods we can use on this login
-def login():
-    if request.method == "POST": # check to see if method is POST
-        session.permanent = True # defines this specific session as a permanent session, default false
-        user = request.form["nm"] # this give us the channel_stats_data user typed in name box form and assigns info the variable.
-        session["user"] = user # Create a SESSION to store user channel_stats_data as a dictionary. From this session you'll get user info
-        flash("Login Succesful!")
-        return redirect(url_for("user")) # redirects user to 'user' function or page.
-    else:
-        if "user" in session: # if user already logged in 
-            flash("Already logged in!")
-            return redirect(url_for("user"))
-
-        return render_template("login.html")
-
-@app.route("/user")
-def user():
-    if "user" in session: # check session to see if contains channel_stats_data
-        user = session["user"]
-        return f"<h1>{user}</h1>"
-    else: # else there is no user in the session or person has not logged in yet.
-        flash("You are not logged in.")
-        return render_template("user.html", user = user)
-
-@app.route("/logout")
-def logout():
-        flash("You have been logged out!", "info")
-        session.pop("user", None) # removes SESSION channel_stats_data
-        return redirect(url_for("login"))
-'''
 # Auto-run Application via Saving File
 if __name__ == "__main__":
     app.run(debug=True) # setting to true allow us to not have to re-run server, just automatically detects changes

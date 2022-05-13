@@ -7,15 +7,10 @@
 {% for messages in get_flashed_messages() %}
   
   <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <strong>Boom!</strong> Wrong ID! {{message}}
+    <strong>Try Again!</strong> Wrong ID! {{message}}
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
-<!--
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>Boom!</strong> Your Channel ID worked, check out the results below! {{message}}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
--->
+
 {% endfor %}
 
 <!--<link rel="{{url_for('static', filename='css/main.css')}}" href="stylesheet"/>-->
@@ -41,7 +36,7 @@
   <table class="table table-striped table-light" id="results">
     <thead>
       <tr>
-        <th scope="col">#</th>
+        
         <th scope="col">Channel Name</th>
         <th scope="col">Subscribers</th>
         <th scope="col">Views</th>
@@ -51,7 +46,7 @@
     </thead>
     <tbody>
       <tr>
-        <th scope="row">1</th>
+        
         <td>{{output['Channel Name'][0]}}</td>
         <td>{{output['Subscribers'][0]}}</td>
         <td>{{output['Views'][0]}}</td>
@@ -62,10 +57,11 @@
   </table>
 
  <!--Create a new table for Playlist stats : use output2 field-->
+
+  <br></br>
+  <h5><center><strong>Results of Top Videos in Channel:</strong></center></h5>
   <table class="table table-striped table-light" id="results">
-    <thead>
       <tr>
-        <th scope="col">#</th>
         <th scope="col">Channel Title</th>
         <th scope="col">Video Title</th>
         <th scope="col">View Count</th>
@@ -74,16 +70,20 @@
       </tr>
     </thead>
     <tbody>
+
+    {% for index, row in output2.iterrows() %}
       <tr> 
-        <th scope="row">1</th>
-        <td>{{output2['channelTitle'][0]}}</td>
-        <td>{{output2['title'][0]}}</td>
-        <td>{{output2['viewCount'][0]}}</td>
-        <td>{{output2['likeCount'][0]}}</td>
-        <td>{{output2['commentCount'][0]}}</td>
+        
+        <td>{{output2['channelTitle'][index]}}</td>
+        <td>{{output2['title'][index]}}</td>
+        <td>{{output2['viewCount'][index]}}</td>
+        <td>{{output2['likeCount'][index]}}</td>
+        <td>{{output2['commentCount'][index]}}</td>
       </tr> 
+    {% endfor %}
     </tbody>
   </table>
+  
 
 {% endblock %}
 

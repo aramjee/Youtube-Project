@@ -3,12 +3,14 @@ body {
     padding: 0;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #444;
+    background-size: 2200px;
+    background-image: url('/static/images/mountains.jpg')
   }
   /*
    * Formatting the header area
    */
   header {
-    background-color: #DFB887;
+    background-color: #a0df87;
     height: 35px;
     width: 100%;
     opacity: .9;
