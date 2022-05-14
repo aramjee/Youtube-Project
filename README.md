@@ -1,5 +1,5 @@
 ## Youtube Project
-* Youtube api project with Flask* Check it out here:  https://youtube-api-amit.herokuapp.com/
+*Youtube api project with Flask* Check it out here:  https://youtube-api-amit.herokuapp.com/
 
 ### About the Project
 + This project uses the youtube API to get youtube statistics on any youtube Channel and the top 10 viewed videos within a given Channel.  
