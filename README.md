@@ -2,7 +2,7 @@
 * Youtube api project with Flask* Check it out here:  https://youtube-api-amit.herokuapp.com/
 
 ### About the Project
-+ This project uses the youtube API to query and return back youtube statistics on any youtube Channel and the top 10 viewed videos within a given Channel.  
++ This project uses the youtube API to query back youtube statistics on any youtube Channel and the top 10 viewed videos within a given Channel.  
 + This was my first time learning about APIs, and I was inspired to build a project that displays back data based on user input.
 
 ### Technology / Framworks Used
