@@ -39,7 +39,7 @@ def home(): #inline HTML
         api_service_name = "youtube"
         api_version = "v3"
 
-        # Get credentials and create an API client
+        # Get credentials and creates an API client
         youtube = build(
         api_service_name, api_version, developerKey=api_key) # replace credential with our developer key, also not authenticating any users
 
