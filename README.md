@@ -2,6 +2,8 @@
 *Youtube api project with Flask* Check it out here:  https://youtube-api-amit.herokuapp.com/
 
 ### About the Project
+
+#####
 + This project uses the youtube API to get youtube statistics on any youtube Channel and the top 10 viewed videos within a given Channel.  
 + This was my first time learning about APIs, and I was inspired to build a project that displays back data based on user input.
 
@@ -16,6 +18,7 @@ This project uses the following frameworks  :
 ![image](https://user-images.githubusercontent.com/26206720/168448967-6ccdd458-190b-492a-95c7-d6fc0096f436.png)
 
 ### Credits
+#####
 The code used in this projected was borrowed from Thu Vu Data Anaytics channel at https://www.youtube.com/watch?v=D56_Cx36oGY&t=957s, and modified to return back specific data fields within a pandas dataframe in Flask.
 
 
