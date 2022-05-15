@@ -6,8 +6,7 @@ from IPython.display import JSON
 import os
 
 app = Flask(__name__) # creates an instance of a flask application
-app.secret_key = "hello"  # why do not delete this ?
-
+app.secret_key = os.environ.get('app.secret_key')
 
 
 @app.route("/", methods=['GET', 'POST']) # default domain can be /home or /anything
@@ -99,7 +98,7 @@ def home(): #inline HTML
                 return(pd.DataFrame(all_data))
 
             except:
-                flash("no go.")
+                flash("")
                 
                 #channel_stats="Try re-entering a correct channel ID from youtube."
 
